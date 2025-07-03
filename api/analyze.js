@@ -21,6 +21,8 @@ module.exports = async (req, res) => {
   `;
 
   try {
+    console.log('Received text for analysis:', text.substring(0, 200)); // Log the first 200 chars
+
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
@@ -31,14 +33,15 @@ module.exports = async (req, res) => {
       }),
     });
 
+    const responseBody = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Error from Gemini API:', errorData);
+      console.error('Error from Gemini API:', JSON.stringify(responseBody, null, 2));
       return res.status(response.status).json({ error: 'Error from Gemini API.' });
     }
 
-    const data = await response.json();
-    const analysisResult = JSON.parse(data.candidates[0].content.parts[0].text);
+    console.log('Received response from Gemini:', JSON.stringify(responseBody, null, 2));
+    const analysisResult = JSON.parse(responseBody.candidates[0].content.parts[0].text);
     
     res.status(200).json(analysisResult);
   } catch (error) {
