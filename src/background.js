@@ -1,4 +1,4 @@
-importScripts('analyzer.js');
+// importScripts('analyzer.js');
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "analyze") {
@@ -14,8 +14,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
               fetch(response.url)
                 .then(res => res.text())
                 .then(text => {
-                  const analysis = analyzePolicy(text);
-                  sendResponse(analysis);
+                  // Send the text to our serverless function for analysis
+                  fetch('https://analyzerrr.vercel.app/api/analyze', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: text }),
+                  })
+                  .then(res => res.json())
+                  .then(analysis => {
+                    sendResponse(analysis);
+                  })
+                  .catch(error => {
+                    console.error("Error from analysis server:", error);
+                    sendResponse({ error: "Could not get analysis from server." });
+                  });
                 })
                 .catch(error => {
                   console.error("Error fetching privacy policy:", error);
