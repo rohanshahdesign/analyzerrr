@@ -14,6 +14,7 @@ function findPolicyLinks() {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "getPrivacyPolicyUrl") {
     const policyUrls = findPolicyLinks();
+    console.log("Found policy URLs:", policyUrls);
     sendResponse({ urls: policyUrls });
   }
 });
