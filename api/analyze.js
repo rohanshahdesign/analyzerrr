@@ -11,13 +11,43 @@ module.exports = async (req, res) => {
   }
 
   const prompt = `
-    Analyze the following privacy policy and return a JSON object with a risk score from 1 to 5 (5 being the safest) and a detailed breakdown.
-    The JSON object should have the following structure: { "score": number, "text": string, "details": [{ "topic": string, "rating": "Good" | "Average" | "Poor", "quote": string }] }
-    The topics to analyze are: Data Sharing, User Rights, Data Retention, Data Security, and Cookie Policy.
-    For each topic, provide a rating and a direct quote from the policy that justifies the rating.
-    If the policy text mentions that it links or redirects to another privacy policy (e.g., Google's), please note this in the main "text" field of the JSON response.
+    You are a Privacy Policy Analyst. Your task is to analyze the following privacy policy text and provide a detailed assessment.
 
-    Privacy Policy Text:
+    **Instructions:**
+
+    1.  **Read the entire policy text carefully.** Understand the context and meaning of each section.
+    2.  **Identify key information** related to the following topics:
+        *   Data Collection
+        *   Data Sharing
+        *   Data Retention
+        *   User Rights
+        *   Data Security
+        *   Cookie Policy
+    3.  **For each topic, provide a rating:** "Good", "Average", or "Poor".
+        *   **Good:** The policy is clear, transparent, and respects user privacy.
+        *   **Average:** The policy is somewhat vague or has some practices that could be improved.
+        *   **Poor:** The policy is unclear, invasive, or lacks important information.
+    4.  **For each topic, provide a direct quote** from the policy that best justifies your rating. The quote should be the most relevant sentence or two.
+    5.  **Provide an overall risk score** from 1 to 5, where 5 is the safest and 1 is the riskiest.
+    6.  **Write a brief, overall summary** in the "text" field that explains the risk score and highlights the most important findings.
+    7.  **If the policy mentions linking or redirecting** to another policy, note this in your summary.
+
+    **Output Format:**
+
+    Return a single JSON object with the following structure:
+    {
+      "score": number,
+      "text": string,
+      "details": [
+        {
+          "topic": string,
+          "rating": "Good" | "Average" | "Poor",
+          "quote": string
+        }
+      ]
+    }
+
+    **Privacy Policy Text:**
     ${text}
   `;
 
