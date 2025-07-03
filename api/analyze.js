@@ -41,7 +41,12 @@ module.exports = async (req, res) => {
     }
 
     console.log('Received response from Gemini:', JSON.stringify(responseBody, null, 2));
-    const analysisResult = JSON.parse(responseBody.candidates[0].content.parts[0].text);
+    
+    // Clean the response to remove the markdown code block
+    const rawText = responseBody.candidates[0].content.parts[0].text;
+    const jsonText = rawText.replace(/```json\n|```/g, '');
+    
+    const analysisResult = JSON.parse(jsonText);
     
     res.status(200).json(analysisResult);
   } catch (error) {
