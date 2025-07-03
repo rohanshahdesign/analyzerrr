@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const resultDiv = document.getElementById('result');
 
   analyzeButton.addEventListener('click', function() {
-    resultDiv.innerHTML = '<p>Analyzing...</p>';
+    resultDiv.innerHTML = '<div class="loader"></div>';
     chrome.runtime.sendMessage({ action: "analyze" }, function(response) {
       if (response && response.error) {
         resultDiv.innerHTML = `<p>Error: ${response.error}</p>`;

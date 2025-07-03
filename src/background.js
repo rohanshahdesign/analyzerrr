@@ -10,17 +10,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           files: ["content.js"]
         }, () => {
           chrome.tabs.sendMessage(activeTab.id, { action: "getPrivacyPolicyUrl" }, (response) => {
-            if (response && response.url) {
-              fetch(response.url)
-                .then(res => res.text())
-                .then(text => {
-                  // Send the text to our serverless function for analysis
+            if (response && response.urls && response.urls.length > 0) {
+              Promise.all(response.urls.map(url => fetch(url).then(res => res.text())))
+                .then(texts => {
+                  const combinedText = texts.join('\n\n');
+                  // Send the combined text to our serverless function for analysis
                   fetch('https://analyzerrr.vercel.app/api/analyze', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ text: text }),
+                    body: JSON.stringify({ text: combinedText }),
                   })
                   .then(res => res.json())
                   .then(analysis => {
@@ -32,11 +32,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                   });
                 })
                 .catch(error => {
-                  console.error("Error fetching privacy policy:", error);
-                  sendResponse({ error: "Could not fetch the privacy policy." });
+                  console.error("Error fetching privacy policies:", error);
+                  sendResponse({ error: "Could not fetch the privacy policies." });
                 });
             } else {
-              sendResponse({ error: "Could not find the privacy policy link." });
+              sendResponse({ error: "Could not find any privacy policy links." });
             }
           });
         });

@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
     The JSON object should have the following structure: { "score": number, "text": string, "details": [{ "topic": string, "rating": "Good" | "Average" | "Poor", "quote": string }] }
     The topics to analyze are: Data Sharing, User Rights, Data Retention, Data Security, and Cookie Policy.
     For each topic, provide a rating and a direct quote from the policy that justifies the rating.
+    If the policy text mentions that it links or redirects to another privacy policy (e.g., Google's), please note this in the main "text" field of the JSON response.
 
     Privacy Policy Text:
     ${text}
