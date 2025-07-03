@@ -54,7 +54,7 @@ module.exports = async (req, res) => {
   try {
     console.log('Received text for analysis:', text.substring(0, 200)); // Log the first 200 chars
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
