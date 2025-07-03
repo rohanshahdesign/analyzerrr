@@ -3,6 +3,11 @@ function findPolicyLinks() {
   const policyRegex = /privacy|cookie/i;
   const policyUrls = new Set();
 
+  // Add the current page's URL if it seems to be a privacy policy
+  if (policyRegex.test(window.location.href)) {
+    policyUrls.add(window.location.href);
+  }
+
   for (let i = 0; i < links.length; i++) {
     if (policyRegex.test(links[i].textContent) || policyRegex.test(links[i].href)) {
       policyUrls.add(links[i].href);
