@@ -15,7 +15,8 @@ Privacy Guard is a tool for empowers users to make informed decisions about thei
 
 ### 3.2. Privacy Policy Analysis
 - The extension will scrape and analyze the content of the privacy policy.
-- An algorithm will evaluate the policy based on a variety of key topics, including:
+- The analysis will be performed by a Large Language Model (LLM) via a secure, server-side API endpoint.
+- The LLM will evaluate the policy based on a variety of key topics, including:
   - **Data Collection:** What data is being collected.
   - **Data Sharing:** If and how data is shared with third parties.
   - **Data Retention:** How long data is stored.
@@ -41,6 +42,7 @@ Privacy Guard is a tool for empowers users to make informed decisions about thei
 ### 3.5. User Interface
 - The risk score, textual representation, and summary of concerns will be displayed in the extension's UI.
 - The UI will be user-friendly and easily accessible.
+- A loader animation will be displayed while the analysis is in progress.
 
 ### 3.6. Algorithm and Weighting
 - The scoring algorithm will use a weighted system to reflect the importance of different privacy factors. Key topics like **Data Sharing** and **User Rights** will have specific weights assigned to them to accurately calculate the final risk score.
@@ -51,3 +53,14 @@ Privacy Guard is a tool for empowers users to make informed decisions about thei
 
 ### 3.8. Output Format
 - The analysis results will be presented in a clear and understandable modal, allowing users to quickly assess a website's privacy risks.
+
+## 4. Future Enhancements
+
+### 4.1. Advanced Link Following
+- Enhance the content script to identify and follow links to related policies (e.g., Cookie Policy, Terms of Service) and include their content in the analysis for a more comprehensive assessment.
+
+### 4.2. User-Provided API Key
+- Implement an options page to allow users to provide their own API key for the analysis service. This would allow for higher rate limits and more control over the analysis process.
+
+### 4.3. Premium Tier
+- Introduce a premium subscription tier that offers higher rate limits, more advanced analysis features, and priority support.
