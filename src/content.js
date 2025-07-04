@@ -21,5 +21,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const policyUrls = findPolicyLinks();
     console.log("Found policy URLs:", policyUrls);
     sendResponse({ urls: policyUrls });
+  } else if (request.action === "getPageText") {
+    sendResponse({ text: document.body.innerText });
   }
 });

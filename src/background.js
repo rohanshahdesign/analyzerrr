@@ -15,16 +15,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
               console.log("Analyzing main policy URL:", mainPolicyUrl);
               console.log("Other found URLs:", response.urls.slice(1));
 
-              fetch(mainPolicyUrl)
-                .then(res => res.text())
-                .then(text => {
+              chrome.tabs.sendMessage(activeTab.id, { action: "getPageText" }, (response) => {
+                if (response && response.text) {
                   // Send the text to our serverless function for analysis
                   fetch('https://analyzerrr.vercel.app/api/analyze', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ text: text }),
+                    body: JSON.stringify({ text: response.text }),
                   })
                   .then(res => res.json())
                   .then(analysis => {
@@ -34,11 +33,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     console.error("Error from analysis server:", error);
                     sendResponse({ error: "Could not get analysis from server." });
                   });
-                })
-                .catch(error => {
-                  console.error("Error fetching privacy policy:", error);
-                  sendResponse({ error: "Could not fetch the privacy policy." });
-                });
+                } else {
+                  sendResponse({ error: "Could not get page text." });
+                }
+              });
             } else {
               sendResponse({ error: "Could not find any privacy policy links." });
             }
