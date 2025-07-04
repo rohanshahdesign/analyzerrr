@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultDiv.innerHTML = `<p>Error: ${response.error}</p>`;
       } else if (response && response.score) {
         resultDiv.innerHTML = `
-          <h2>Risk Score: ${response.score}/5 (${response.text})</h2>
+          <h3>Risk Score: ${response.score}/5 (${response.text})</h3>
           <div id="details"></div>
         `;
         const detailsDiv = document.getElementById('details');
