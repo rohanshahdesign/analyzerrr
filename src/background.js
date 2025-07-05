@@ -53,7 +53,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                                     chrome.tabs.remove(newTab.id);
                                   });
                                 } else {
-                                  sendResponse({ error: "Current page is not a privacy policy. Please navigate to the privacy policy page and click on the above button." });
+                                  sendResponse({ error: "Current page is not a privacy policy. Please navigate to the privacy policy page and click on the analyze button." });
                                   chrome.tabs.remove(newTab.id);
                                 }
                               });

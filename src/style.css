@@ -36,8 +36,8 @@ button#analyze {
   color: white;
   border: none;
   border-radius: 12px;
-  padding: 16px;
-  font-size: 22px;
+  padding: 12px;
+  font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
