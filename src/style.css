@@ -1,74 +1,160 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  width: 350px;
-  padding: 16px;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  width: 521px;
   background-color: #f7f7f7;
-  color: #333;
+  color: #1a1a1a;
+  margin: 0;
 }
 
 .container {
+  padding: 24px;
+}
+
+.header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ebebeb;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 h1 {
   font-size: 24px;
-  font-weight: 600;
-  margin: 0 0 16px;
-}
-
-h2 {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0 0 12px;
-}
-
-button#analyze {
-  background-color: #007aff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 16px;
-  font-size: 14px;
   font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  align-self: flex-start;
+  margin: 0;
 }
 
-button#analyze:hover {
-  background-color: #005ecb;
+.close-icon {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }
 
 #result {
-    margin-top: 16px;
+  margin-top: 16px;
+}
+
+.score-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.score-visual {
+  position: relative;
+  width: 173px;
+  height: 100px;
+}
+
+.score-text-container {
+    position: absolute;
+    top: 53px;
+    left: 56px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.score-number {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.score-total {
+  font-size: 24px;
+  color: #4d4d4d;
+  line-height: 1.2;
+}
+
+.score-rating {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.64px;
+}
+
+.summary-section, .details-section {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 10px;
+}
+
+.summary-text {
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .topic {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    padding: 12px;
+  background-color: white;
+  border: 1px solid #ebebeb;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.topic-header {
+.topic-name {
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.topic-rating-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    cursor: pointer;
+    gap: 20px;
+}
+
+.topic-rating {
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  line-height: 1.4;
 }
 
 .toggle {
-    font-size: 20px;
-    font-weight: bold;
-    color: #999;
+  cursor: pointer;
 }
 
 .topic-quote {
-    margin-top: 12px;
-    padding-left: 12px;
-    border-left: 2px solid #e0e0e0;
-    font-style: italic;
-    color: #555;
+  background-color: #fafafa;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  font-style: italic;
+  color: #555;
+  display: none;
+}
+
+/* Score-based colors */
+.score-1 { color: #D92D20; } /* Danger */
+.score-2 { color: #D95520; } /* High Risk */
+.score-3 { color: #CC6114; } /* Moderate */
+.score-4 { color: #148BCC; } /* Low Risk */
+.score-5 { color: #14CC5A; } /* No Worry */
+
+/* Rating-based colors */
+.rating-good { background-color: #dbffdb; color: #269126; }
+.rating-average { background-color: #dbecff; color: #265891; }
+.rating-poor { background-color: #ffdbdb; color: #912626; }
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
