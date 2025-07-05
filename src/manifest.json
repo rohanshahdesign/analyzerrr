@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "Privacy Guard",
-  "version": "1.0",
-  "description": "Analyzes privacy policies and provides a simple risk score.",
+  "version": "0.0.0.1",
+  "description": "An intelligent extension that analyzes website privacy policies, providing a clear risk score and a detailed breakdown to protect your data.",
   "permissions": [
     "activeTab",
     "scripting",
-    "storage"
+    "storage",
+    "tabs"
   ],
   "action": {
     "default_popup": "popup.html",
