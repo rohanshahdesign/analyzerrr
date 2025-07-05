@@ -139,8 +139,11 @@ h1 {
 
 .toggle {
   cursor: pointer;
-  font-size: 24px;
-  color: #666;
+  transition: transform 0.3s ease;
+}
+
+.toggle.rotated {
+  transform: rotate(180deg);
 }
 
 .topic-quote {

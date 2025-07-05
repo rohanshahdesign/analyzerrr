@@ -89,8 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
       
       if (quoteDiv.style.display === 'none' || quoteDiv.style.display === '') {
         quoteDiv.style.display = 'block';
+        toggle.classList.add('rotated');
       } else {
         quoteDiv.style.display = 'none';
+        toggle.classList.remove('rotated');
       }
     }
 
