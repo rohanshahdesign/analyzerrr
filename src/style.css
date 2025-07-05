@@ -51,20 +51,20 @@ h1 {
 }
 
 .score-arc {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   transform: rotate(-90deg);
 }
 
 .score-arc-background {
   fill: none;
   stroke: #ebebeb;
-  stroke-width: 20;
+  stroke-width: 10;
 }
 
 .score-arc-foreground {
   fill: none;
-  stroke-width: 20;
+  stroke-width: 10;
   stroke-linecap: round;
   transition: stroke-dasharray 0.5s ease-in-out;
 }
@@ -140,6 +140,7 @@ h1 {
 .toggle {
   cursor: pointer;
   font-size: 24px;
+  color: #666;
 }
 
 .topic-quote {

@@ -45,22 +45,24 @@ document.addEventListener('DOMContentLoaded', function() {
       `;
 
       const detailsContainer = document.getElementById('details-container');
-      details.forEach(item => {
-        const topicDiv = document.createElement('div');
-        topicDiv.innerHTML = `
-          <div class="topic">
-            <span class="topic-name">${item.topic}</span>
-            <div class="topic-rating-container">
-              <span class="topic-rating rating-${item.rating.toLowerCase()}">${item.rating}</span>
-              <i class="ph-caret-down toggle"></i>
+      if (details) {
+        details.forEach(item => {
+          const topicDiv = document.createElement('div');
+          topicDiv.innerHTML = `
+            <div class="topic">
+              <span class="topic-name">${item.topic}</span>
+              <div class="topic-rating-container">
+                <span class="topic-rating rating-${item.rating.toLowerCase()}">${item.rating}</span>
+                <img src="icons/caretdown.svg" alt="Toggle" class="toggle">
+              </div>
             </div>
-          </div>
-          <div class="topic-quote" style="display: none;">
-            <p>"${item.quote}"</p>
-          </div>
-        `;
-        detailsContainer.appendChild(topicDiv);
-      });
+            <div class="topic-quote" style="display: none;">
+              <p>"${item.quote}"</p>
+            </div>
+          `;
+          detailsContainer.appendChild(topicDiv);
+        });
+      }
 
       updateScoreArc(score);
     } else {
@@ -80,18 +82,20 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   document.body.addEventListener('click', function(event) {
-    if (event.target.classList.contains('toggle')) {
-      const topicDiv = event.target.closest('.topic');
-      const quoteDiv = topicDiv.nextElementSibling;
-      if (quoteDiv.style.display === 'none') {
+    const toggle = event.target.closest('.toggle');
+    if (toggle) {
+      const topicContainer = toggle.closest('.topic').parentElement;
+      const quoteDiv = topicContainer.querySelector('.topic-quote');
+      
+      if (quoteDiv.style.display === 'none' || quoteDiv.style.display === '') {
         quoteDiv.style.display = 'block';
-        event.target.classList.replace('ph-caret-down', 'ph-caret-up');
       } else {
         quoteDiv.style.display = 'none';
-        event.target.classList.replace('ph-caret-up', 'ph-caret-down');
       }
     }
-    if (event.target.classList.contains('close-icon')) {
+
+    const closeIcon = event.target.closest('.close-icon');
+    if (closeIcon) {
       window.close();
     }
   });
