@@ -39,21 +39,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     if (policyResponse && policyResponse.urls && policyResponse.urls.length > 0) {
                       const policyUrl = policyResponse.urls[0];
                       chrome.tabs.create({ url: policyUrl, active: false }, (newTab) => {
-                        chrome.scripting.executeScript({
-                          target: { tabId: newTab.id },
-                          files: ["content.js"]
-                        }, () => {
-                          chrome.tabs.sendMessage(newTab.id, { action: "getPageText" }, (textResponse) => {
-                            if (textResponse && textResponse.text) {
-                              analyzeText(textResponse.text, (analysis) => {
-                                sendResponse(analysis);
-                                chrome.tabs.remove(newTab.id);
+                        chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+                          if (tabId === newTab.id && info.status === 'complete') {
+                            chrome.tabs.onUpdated.removeListener(listener);
+                            chrome.scripting.executeScript({
+                              target: { tabId: newTab.id },
+                              files: ["content.js"]
+                            }, () => {
+                              chrome.tabs.sendMessage(newTab.id, { action: "getPageText" }, (textResponse) => {
+                                if (textResponse && textResponse.text) {
+                                  analyzeText(textResponse.text, (analysis) => {
+                                    sendResponse(analysis);
+                                    chrome.tabs.remove(newTab.id);
+                                  });
+                                } else {
+                                  sendResponse({ error: "Current page is not a privacy policy. Please navigate to the privacy policy page and click on the above button." });
+                                  chrome.tabs.remove(newTab.id);
+                                }
                               });
-                            } else {
-                              sendResponse({ error: "Could not get text from policy page." });
-                              chrome.tabs.remove(newTab.id);
-                            }
-                          });
+                            });
+                          }
                         });
                       });
                     } else {

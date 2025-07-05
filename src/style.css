@@ -26,8 +26,27 @@ h1 {
 }
 
 .close-icon {
-  font-size: 32px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
+}
+
+button#analyze {
+  background-color: #2f77c5;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 22px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+  letter-spacing: -0.44px;
+}
+
+button#analyze:hover {
+  background-color: #235a9a;
 }
 
 #result {
