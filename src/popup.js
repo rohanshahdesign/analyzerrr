@@ -12,30 +12,27 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function renderResponse(response) {
-    if (!response) {
-      resultDiv.innerHTML = '<p>Error: No response from the background script.</p>';
+    if (!response || response.error) {
+      resultDiv.innerHTML = `<p>Error: ${response ? response.error : 'No response from the background script.'}</p>`;
       return;
     }
-    if (response.error) {
-      resultDiv.innerHTML = `<p>Error: ${response.error}</p>`;
-      return;
-    }
-    if (response.score) {
-      const score = response.score;
-      const scoreText = response.text;
-      const summary = response.details.find(d => d.topic === "Summary")?.quote || "No summary available.";
-      const details = response.details.filter(d => d.topic !== "Summary");
 
+    if (response.score) {
+      const { score, text, summary, details } = response;
+      
       resultDiv.innerHTML = `
         <div class="score-section">
           <div class="score-visual">
-            <img src="http://localhost:3845/assets/8a698373084b36220f6984952c339ed3af66e388.svg" alt="Score Ring">
+            <svg class="score-arc" viewBox="0 0 100 100">
+              <circle class="score-arc-background" cx="50" cy="50" r="40"></circle>
+              <circle class="score-arc-foreground score-${score}-stroke" cx="50" cy="50" r="40"></circle>
+            </svg>
             <div class="score-text-container">
-              <span class="score-number">${score}</span>
+              <span class="score-number score-${score}-color">${score}</span>
               <span class="score-total">/5</span>
             </div>
           </div>
-          <div class="score-rating score-${score}">${scoreText}</div>
+          <div class="score-rating score-${score}-color">${text}</div>
         </div>
         <div class="summary-section">
           <div class="section-title">Summary</div>
@@ -55,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="topic-name">${item.topic}</span>
             <div class="topic-rating-container">
               <span class="topic-rating rating-${item.rating.toLowerCase()}">${item.rating}</span>
-              <img src="http://localhost:3845/assets/d353e0c28001a9a46ccf089003ed2d00ffd2e47f.svg" alt="Toggle" class="toggle">
+              <i class="ph-caret-down toggle"></i>
             </div>
           </div>
           <div class="topic-quote" style="display: none;">
@@ -64,8 +61,21 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         detailsContainer.appendChild(topicDiv);
       });
+
+      updateScoreArc(score);
     } else {
       resultDiv.innerHTML = '<p>Could not analyze the privacy policy.</p>';
+    }
+  }
+
+  function updateScoreArc(score) {
+    const arc = document.querySelector('.score-arc-foreground');
+    if (arc) {
+      const radius = arc.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (score / 5) * circumference;
+      arc.style.strokeDasharray = `${circumference} ${circumference}`;
+      arc.style.strokeDashoffset = offset;
     }
   }
 
@@ -75,8 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const quoteDiv = topicDiv.nextElementSibling;
       if (quoteDiv.style.display === 'none') {
         quoteDiv.style.display = 'block';
+        event.target.classList.replace('ph-caret-down', 'ph-caret-up');
       } else {
         quoteDiv.style.display = 'none';
+        event.target.classList.replace('ph-caret-up', 'ph-caret-down');
       }
     }
     if (event.target.classList.contains('close-icon')) {

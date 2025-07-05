@@ -37,13 +37,15 @@ module.exports = async (req, res) => {
       3.  **For each topic, provide a rating:** "Good", "Average", or "Poor".
       4.  **For each topic, provide a direct quote** from the policy that justifies your rating.
       5.  **Provide an overall risk score** from 1 to 5 (5 is safest).
-      6.  **Write a brief summary** explaining the risk score.
+      6.  **Based on the score, provide a risk level text**: 1: "Danger", 2: "High Risk", 3: "Moderate Risk", 4: "Low Risk", 5: "No Worry".
+      7.  **Write a brief summary** explaining the risk score.
 
       **Output Format:**
       Return a single JSON object:
       {
         "score": number,
-        "text": string,
+        "text": string, // This should be the risk level text
+        "summary": string,
         "details": [
           {
             "topic": string,
