@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="summary-section">
           <div class="section-title">Summary</div>
-          <p class="summary-text">${summary.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>
+          <p class="summary-text">${boldKeywords(summary, response.keywords)}</p>
         </div>
         <div class="details-section">
           <div class="section-title">Detailed breakdown</div>
@@ -79,6 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
       arc.style.strokeDasharray = `${circumference} ${circumference}`;
       arc.style.strokeDashoffset = offset;
     }
+  }
+
+  function boldKeywords(summary, keywords) {
+    if (!keywords || keywords.length === 0) {
+      return summary;
+    }
+    const regex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'gi');
+    return summary.replace(regex, '<strong>$1</strong>');
   }
 
   document.body.addEventListener('click', function(event) {

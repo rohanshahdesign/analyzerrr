@@ -38,7 +38,8 @@ module.exports = async (req, res) => {
       4.  **For each topic, provide a direct quote** from the policy that justifies your rating.
       5.  **Provide an overall risk score** from 1 to 5 (5 is safest).
       6.  **Based on the score, provide a risk level text**: 1: "Danger", 2: "High Risk", 3: "Moderate Risk", 4: "Low Risk", 5: "No Worry".
-      7.  **Write a brief summary** explaining the risk score. In the summary, wrap the most important words or phrases in double asterisks (`**`).
+      7.  **Write a brief summary** explaining the risk score.
+      8.  **Extract keywords** from the summary that should be bolded.
 
       **Output Format:**
       Return a single JSON object:
@@ -46,6 +47,7 @@ module.exports = async (req, res) => {
         "score": number,
         "text": string, // This should be the risk level text
         "summary": string,
+        "keywords": [string],
         "details": [
           {
             "topic": string,
