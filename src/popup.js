@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="summary-section">
           <div class="section-title">Summary</div>
-          <p class="summary-text">${summary}</p>
+          <p class="summary-text">${summary.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>
         </div>
         <div class="details-section">
           <div class="section-title">Detailed breakdown</div>
